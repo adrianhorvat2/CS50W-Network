@@ -3,8 +3,12 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.http import JsonResponse
+from .models import Post, User
+import json
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
-from .models import User
 
 
 def index(request):
@@ -61,3 +65,22 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+@csrf_exempt
+def posts(request):
+
+    if request.method == "GET":
+        posts = Post.objects.all().order_by("-timestamp")
+        return JsonResponse([post.serialize() for post in posts], safe=False)
+    
+    elif request.method == "POST":
+        data = json.loads(request.body)
+        content = data.get("content", "")
+        
+        if content == "":
+            return JsonResponse({"error": "Post cannot be empty"}, status=400)
+
+        post = Post(user=request.user, content=content, timestamp=timezone.now())
+        post.save()
+        
+        return JsonResponse({"message": "Post created successfully"}, status=201)
