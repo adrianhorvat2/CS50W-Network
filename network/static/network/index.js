@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector('#post-form').addEventListener('submit', submit_post);
-    console.log("DOM loaded, calling load_posts()...");
     load_posts();
-
 });
 
 function submit_post(event) {
@@ -24,12 +22,12 @@ function submit_post(event) {
     .then(response => response.json())
     .then(result => {
         document.querySelector('#post-content').value = '';
-
         load_posts();
     });
 }
 
 function load_posts(){
+    document.querySelector('#posts-view').innerHTML = '';
     fetch('/posts')
     .then(response => response.json())
     .then(posts => {
@@ -38,8 +36,8 @@ function load_posts(){
             post_div.innerHTML = `
                 <p>${post.content}</p>
                 <p><small>${post.timestamp}</small></p>
-                <p><small>By: ${post.user}</small></p>
-                <p><small>Likes: ${post.likes}</small></p>
+                <p><strong>${post.user}</strong></p>
+                <p>Likes: ${post.likes}</p>
             `;
             document.querySelector('#posts-view').appendChild(post_div);
         });
