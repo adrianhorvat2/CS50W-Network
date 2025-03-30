@@ -16,7 +16,6 @@ function submit_post(event) {
         }),
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
         }
     })
     .then(response => response.json())
