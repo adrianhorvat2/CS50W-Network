@@ -8,8 +8,6 @@
 {% block body %}
 <h1>All Posts</h1>
     {% if user.is_authenticated %}
-        <h2>New Post</h2>
-        
         <div id="post-form-container">
             <form id="post-form">
                 {% csrf_token %}

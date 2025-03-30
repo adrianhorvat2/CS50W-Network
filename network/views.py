@@ -80,7 +80,7 @@ def posts(request):
         if content == "":
             return JsonResponse({"error": "Post cannot be empty"}, status=400)
 
-        post = Post(user=request.user, content=content, timestamp=timezone.now())
+        post = Post(user=request.user, content=content)
         post.save()
         
         return JsonResponse({"message": "Post created successfully"}, status=201)
