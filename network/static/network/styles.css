@@ -9,16 +9,30 @@ body {
     background-color: var(--primary-bg); 
     color: var(--text-color); 
     margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
 }
 
 .navbar {
     background-color: #2b2d2f !important; 
     border-bottom: 2px solid #444;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
 }
 
 .navbar-brand, .nav-link {
     color: var(--text-color) !important; 
     font-weight: bold;
+}
+
+.navbar-brand {
+    font-size: 24px; 
 }
 
 .navbar-nav .nav-link {

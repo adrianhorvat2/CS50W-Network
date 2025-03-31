@@ -15,7 +15,8 @@ function submit_post(event) {
             content: content
         }),
         headers: {
-            'Content-Type': 'application/json',        }
+            'Content-Type': 'application/json',
+        }
     })
     .then(response => response.json())
     .then(result => {
