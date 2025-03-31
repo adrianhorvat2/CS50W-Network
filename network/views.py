@@ -102,19 +102,23 @@ def user_profile_api(request, username):
     if request.method == "GET":
         return JsonResponse({
             "username": user.username,
+            "posts": [post.serialize() for post in posts],
             "followers": user.followers.count(),
             "following": user.following.count(),
-            "posts": [post.serialize() for post in posts],
             "is_following": request.user in user.followers.all() if request.user.is_authenticated else False
         })
 
     elif request.method == "POST":
         if request.user in user.followers.all():
             user.followers.remove(request.user)
+            request.user.following.remove(user)
             is_following = False
         else:
             user.followers.add(request.user)
+            request.user.following.add(user)
             is_following = True
-
-        return JsonResponse({"is_following": is_following, "followers": user.followers.count()})
+        user.save()
+        request.user.save()
+       
+        return JsonResponse({"is_following": is_following, "followers": user.followers.count(), "following": user.following.count()})
 

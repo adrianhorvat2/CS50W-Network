@@ -6,16 +6,16 @@
 {% endblock %}
 
 {% block body %}
-<h1>{{ user.username }}'s Profile</h1>
+<h1 id="profile-username"></h1>
 
 <div class="profile-info">
     <div class="followers">
         <div class="label">Followers</div>
-        <div class="count">{{ user.followers.count }}</div>
+        <div id="followers-count"></div>
     </div>
     <div class="following">
         <div class="label">Following</div>
-        <div class="count">{{ user.following.count }}</div>
+        <div id="following-count"></div>
     </div>
 </div>
 
