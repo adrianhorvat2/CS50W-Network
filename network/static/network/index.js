@@ -34,9 +34,10 @@ function load_posts(){
             post_div.classList.add('post');
             post_div.innerHTML = `
                 <p>${post.content}</p>
-                <p><small>${post.timestamp}</small></p>
-                <p><strong>${post.user}</strong></p>
-                <p>Likes: ${post.likes}</p>
+                <div class="post-meta-container">
+                    <div class="post-meta">By <strong>${post.user}</strong> on <small>${post.timestamp}</small></div>
+                    <div class="post-likes">Likes: ${post.likes}</div>
+                </div>
             `;
             document.querySelector('#posts-view').appendChild(post_div);
         });
