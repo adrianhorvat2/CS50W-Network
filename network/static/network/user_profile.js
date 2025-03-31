@@ -1,8 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    load_profile_info();
     load_posts();
     follow_button();
 });
+
+function load_profile_info() {
+    const username = window.location.pathname.split('/').pop();
+
+    fetch(`/api/profile/${username}`)
+    .then(response => response.json())
+    .then(user => {
+        document.getElementById("profile-username").innerText = `${user.username}'s Profile`;
+        document.getElementById("followers-count").innerText = user.followers;
+        document.getElementById("following-count").innerText = user.following;
+
+        const followButton = document.getElementById("follow-button");
+        followButton.innerText = user.is_following ? 'Unfollow' : 'Follow';
+        followButton.onclick = toggle_follow;
+    });
+}
 
 function load_posts(){
     document.querySelector('#posts-view').innerHTML = '';
@@ -51,6 +68,6 @@ function toggle_follow() {
     .then(response => response.json())
     .then(user => {
         followButton.innerText = user.is_following ? 'Unfollow' : 'Follow';
-        document.getElementById("followers-count").innerText = `Followers: ${user.followers}`;   
+        load_profile_info(); 
     });
 }
