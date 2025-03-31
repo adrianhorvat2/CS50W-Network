@@ -18,6 +18,16 @@ h1 {
     font-weight: bold;
 }
 
+h1 a {
+    color: var(--text-color); 
+    text-decoration: none;
+}
+
+h1 a:hover {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
 .navbar {
     background-color: #2b2d2f !important; 
     border-bottom: 2px solid #444;

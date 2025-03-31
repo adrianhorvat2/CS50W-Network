@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block body %}
-<h1>Posts</h1>
     {% if user.is_authenticated %}
+    <h1>Posts</h1>
         <div id="post-form-container">
             <form id="post-form">
                 {% csrf_token %}
@@ -15,6 +15,8 @@
                 <button type="submit">Post</button>
             </form>
         </div>
+    {% else %}
+    <h1><a href="{% url 'register' %}">Create </a>an account or <a href="{% url 'login' %}">log in</a> to see posts</h1>
     {% endif %}
     
     <div id="posts-view">
