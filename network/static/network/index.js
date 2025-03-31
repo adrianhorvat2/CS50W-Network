@@ -15,8 +15,7 @@ function submit_post(event) {
             content: content
         }),
         headers: {
-            'Content-Type': 'application/json',
-        }
+            'Content-Type': 'application/json',        }
     })
     .then(response => response.json())
     .then(result => {
@@ -32,6 +31,7 @@ function load_posts(){
     .then(posts => {
         posts.forEach(post => {
             const post_div = document.createElement('div');
+            post_div.classList.add('post');
             post_div.innerHTML = `
                 <p>${post.content}</p>
                 <p><small>${post.timestamp}</small></p>
