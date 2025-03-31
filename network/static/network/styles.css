@@ -140,3 +140,24 @@ button[type="submit"]:hover {
 .post strong {
     color: var(--text-color); 
 }
+
+.profile-info {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-info .followers,
+.profile-info .following {
+    text-align: center; 
+    margin: 20px 20px; 
+}
+
+.profile-info .label {
+    font-weight: bold; 
+    margin-bottom: 5px; 
+}
+
+.profile-info .count {
+    font-size: 1.2em; 
+}

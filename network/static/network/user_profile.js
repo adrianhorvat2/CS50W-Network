@@ -1,33 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    document.querySelector('#post-form').addEventListener('submit', submit_post);
     load_posts();
 });
 
-function submit_post(event) {
-    event.preventDefault();
-    
-    const content = document.querySelector('#post-content').value;
-    
-    fetch('/posts', {
-        method: 'POST',
-        body: JSON.stringify({
-            content: content
-        }),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(result => {
-        document.querySelector('#post-content').value = '';
-        load_posts();
-    });
-}
-
 function load_posts(){
     document.querySelector('#posts-view').innerHTML = '';
-    fetch('/posts')
+    const username = window.location.pathname.slice(1);
+    fetch(`/api/profile/${username}`)
     .then(response => response.json())
     .then(posts => {
         posts.forEach(post => {

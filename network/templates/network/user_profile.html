@@ -1,0 +1,23 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block script %}
+<script src="{% static 'network/user_profile.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>{{ user.username }}'s Profile</h1>
+
+<div class="profile-info">
+    <div class="followers">
+        <div class="label">Followers</div>
+        <div class="count">{{ user.followers.count }}</div>
+    </div>
+    <div class="following">
+        <div class="label">Following</div>
+        <div class="count">{{ user.following.count }}</div>
+    </div>
+</div>
+
+<div id="posts-view"></div>
+{% endblock %}

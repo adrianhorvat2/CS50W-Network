@@ -3,7 +3,16 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    followers = models.ManyToManyField("self", blank=True)
+    following = models.ManyToManyField("self", blank=True)
+    def serialize(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "followers": self.followers.count(),
+            "following": self.following.count(),
+        }
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -16,7 +25,7 @@ class Post(models.Model):
             "id": self.id,
             "user": self.user.username,  
             "content": self.content,
-            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": self.timestamp.strftime("%H:%M %B %d, %Y"),
             "likes": self.likes.count(),
         }
     

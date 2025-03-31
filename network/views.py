@@ -84,3 +84,19 @@ def posts(request):
         post.save()
         
         return JsonResponse({"message": "Post created successfully"}, status=201)
+    
+def user_profile(request, username):
+
+    user = User.objects.get(username=username)
+
+    return render(request, "network/user_profile.html", {
+        "user": user,
+    })
+
+def user_profile_api(request, username):
+
+    if request.method == "GET":
+        user = User.objects.get(username=username)
+        posts = Post.objects.filter(user=user).order_by("-timestamp")
+        posts_data = [post.serialize() for post in posts]
+        return JsonResponse(posts_data, safe=False)
