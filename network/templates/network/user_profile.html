@@ -20,7 +20,9 @@
 </div>
 
 {% if user != request.user %}
-    <button id="follow-button"></button>
+    <div class = "follow-button-container">
+        <button id="follow-button"></button>
+    </div>
 {% endif %}
 
 <div id="posts-view"></div>

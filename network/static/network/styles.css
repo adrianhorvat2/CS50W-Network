@@ -171,3 +171,28 @@ button[type="submit"]:hover {
 .profile-info .count {
     font-size: 1.2em; 
 }
+
+.follow-button-container { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#follow-button {
+    width: 10%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: var(--container-bg); 
+    color: var(--text-color, white);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#follow-button:hover {
+    background-color: #2e3136;
+    color: #ffffff;
+}
