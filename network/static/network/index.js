@@ -1,7 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    document.querySelector('#post-form').addEventListener('submit', submit_post);
-    load_posts();
+    const currentPath = window.location.pathname;
+    
+    const postForm = document.querySelector('#post-form');
+    if (postForm) {
+        postForm.addEventListener('submit', submit_post);
+    }
+    
+    const allPostsLink = document.querySelector('#all-posts');
+    if (allPostsLink) {
+        allPostsLink.addEventListener('click', () => {load_posts('/posts')});
+    }
+    
+    if (currentPath === '/following') {
+        load_posts('/following_api');
+    } else if (currentPath === '/' || currentPath === '/posts') {
+        load_posts('/posts');
+    }
 });
 
 function submit_post(event) {
@@ -25,9 +40,9 @@ function submit_post(event) {
     });
 }
 
-function load_posts(){
+function load_posts(url){
     document.querySelector('#posts-view').innerHTML = '';
-    fetch('/posts')
+    fetch(url)
     .then(response => response.json())
     .then(posts => {
         posts.forEach(post => {

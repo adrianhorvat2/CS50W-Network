@@ -122,3 +122,14 @@ def user_profile_api(request, username):
        
         return JsonResponse({"is_following": is_following, "followers": user.followers.count(), "following": user.following.count()})
 
+def following(request):
+    return render(request, "network/following.html")
+
+def following_api(request):
+    user = request.user
+    following_users = user.following.all()
+    posts = Post.objects.filter(user__in=following_users).order_by("-timestamp")
+
+    posts_data = [post.serialize() for post in posts] 
+
+    return JsonResponse(posts_data, safe=False) 
