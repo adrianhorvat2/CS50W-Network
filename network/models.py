@@ -3,8 +3,9 @@ from django.db import models
 
 
 class User(AbstractUser):
-    followers = models.ManyToManyField("self", blank=True)
-    following = models.ManyToManyField("self", blank=True)
+    followers = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="user_following")
+    following = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="user_followers")
+
     def serialize(self):
         return {
             "id": self.id,

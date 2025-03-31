@@ -93,10 +93,28 @@ def user_profile(request, username):
         "user": user,
     })
 
+@csrf_exempt
 def user_profile_api(request, username):
 
+    user = User.objects.get(username=username)
+    posts = Post.objects.filter(user=user).order_by("-timestamp")
+
     if request.method == "GET":
-        user = User.objects.get(username=username)
-        posts = Post.objects.filter(user=user).order_by("-timestamp")
-        posts_data = [post.serialize() for post in posts]
-        return JsonResponse(posts_data, safe=False)
+        return JsonResponse({
+            "username": user.username,
+            "followers": user.followers.count(),
+            "following": user.following.count(),
+            "posts": [post.serialize() for post in posts],
+            "is_following": request.user in user.followers.all() if request.user.is_authenticated else False
+        })
+
+    elif request.method == "POST":
+        if request.user in user.followers.all():
+            user.followers.remove(request.user)
+            is_following = False
+        else:
+            user.followers.add(request.user)
+            is_following = True
+
+        return JsonResponse({"is_following": is_following, "followers": user.followers.count()})
+
