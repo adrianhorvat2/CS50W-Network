@@ -58,20 +58,50 @@ h1 a:hover {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-#posts-view, #post-form-container {
+/*LOGIN AND REGISTER FORMS*/
+.form-control {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-bg); 
+    font-size: 16px;
+    resize: none;
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    background-color: var(--primary-bg);
+    color: var(--text-color); 
+    outline: none;
+    box-shadow: none;
+}
+
+.login-form a, .register-form a {
+    color: var(--text-color); 
+    text-decoration: none;
+}
+
+.login-form a:hover, .register-form a:hover {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
+
+/*POSTS*/
+#posts-view, #post-form-container, .login-form, .register-form {
     width: 30%; 
     margin: 20px auto; 
     text-align: center;
 }
 
-#post-form-container {
+#post-form-container, .login-form, .register-form {
     padding: 20px; 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--container-bg); 
 }
 
-#post-form {    
+#post-form, .login-form, .register-form {    
     display: flex;
     flex-direction: column;
     align-items: center;
