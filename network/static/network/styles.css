@@ -166,6 +166,16 @@ button[type="submit"]:hover {
     margin-right: auto; 
 }
 
+.post-meta a {
+    color: var(--text-color); 
+    text-decoration: none;
+}
+
+.post-meta a:hover {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
 .post-likes {
     display: inline-block; 
     margin-left: auto; 

@@ -62,7 +62,7 @@ function load_posts(url, page=1) {
             post_div.innerHTML = `
                 <p>${post.content}</p>
                 <div class="post-meta-container">
-                    <div class="post-meta">By <strong>${post.user}</strong> <small>${post.timestamp}</small></div>
+                    <div class="post-meta">By <strong><a href="${post.user}">${post.user}</a></strong> <small>${post.timestamp}</small></div>
                     <div class="post-likes">Likes: ${post.likes}</div>
                 </div>
             `;
