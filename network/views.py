@@ -8,7 +8,7 @@ from .models import Post, User
 import json
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -70,8 +70,23 @@ def register(request):
 def posts(request):
 
     if request.method == "GET":
-        posts = Post.objects.all().order_by("-timestamp")
-        return JsonResponse([post.serialize() for post in posts], safe=False)
+        page = request.GET.get('page', 1)
+        posts_per_page = 10
+        
+        all_posts = Post.objects.all().order_by("-timestamp")
+        
+        paginator = Paginator(all_posts, posts_per_page)
+
+        page_obj = paginator.get_page(page)
+        
+        return JsonResponse({
+            'posts': [post.serialize() for post in page_obj],
+            'has_next': page_obj.has_next(),
+            'has_previous': page_obj.has_previous(),
+            'current_page': page_obj.number,
+            'total_pages': paginator.num_pages
+        }, safe=False)
+    
     
     elif request.method == "POST":
         data = json.loads(request.body)
@@ -97,15 +112,27 @@ def user_profile(request, username):
 def user_profile_api(request, username):
 
     user = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(user=user).order_by("-timestamp")
 
     if request.method == "GET":
+        page = request.GET.get('page', 1)
+        posts_per_page = 10
+        
+        user_posts = Post.objects.filter(user=user).order_by("-timestamp")
+        
+        paginator = Paginator(user_posts, posts_per_page)
+        
+        page_obj = paginator.get_page(page)
+        
         return JsonResponse({
             "username": user.username,
-            "posts": [post.serialize() for post in posts],
+            "posts": [post.serialize() for post in page_obj],
             "followers": user.followers.count(),
             "following": user.following.count(),
-            "is_following": request.user in user.followers.all() if request.user.is_authenticated else False
+            "is_following": request.user in user.followers.all() if request.user.is_authenticated else False,
+            "has_next": page_obj.has_next(),
+            "has_previous": page_obj.has_previous(),
+            "current_page": page_obj.number,
+            "total_pages": paginator.num_pages
         })
 
     elif request.method == "POST":
@@ -128,8 +155,20 @@ def following(request):
 def following_api(request):
     user = request.user
     following_users = user.following.all()
-    posts = Post.objects.filter(user__in=following_users).order_by("-timestamp")
 
-    posts_data = [post.serialize() for post in posts] 
+    page = request.GET.get('page', 1)
+    posts_per_page = 10
 
-    return JsonResponse(posts_data, safe=False) 
+    all_posts = Post.objects.filter(user__in=following_users).order_by("-timestamp")
+    
+    paginator = Paginator(all_posts, posts_per_page)
+
+    page_obj = paginator.get_page(page)
+    
+    return JsonResponse({
+        'posts': [post.serialize() for post in page_obj],
+        'has_next': page_obj.has_next(),
+        'has_previous': page_obj.has_previous(),
+        'current_page': page_obj.number,
+        'total_pages': paginator.num_pages
+    }, safe=False) 

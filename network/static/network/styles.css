@@ -226,3 +226,36 @@ button[type="submit"]:hover {
     background-color: #2e3136;
     color: #ffffff;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination-button {
+    padding: 10px;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 5px;
+}
+
+.pagination-button:hover {
+    background-color: #2e3136;
+    color: #ffffff;
+}
+
+.page-indicator {
+    margin: 0 10px;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 500;
+}
