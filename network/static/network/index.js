@@ -36,7 +36,12 @@ function submit_post(event) {
     .then(response => response.json())
     .then(result => {
         document.querySelector('#post-content').value = '';
-        load_posts();
+        const currentPath = window.location.pathname;
+        if (currentPath === '/following') {
+            load_posts('/following_api');
+        } else {
+            load_posts('/posts');
+        }
     });
 }
 
