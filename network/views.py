@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse
 from .models import Post, User
@@ -87,7 +87,7 @@ def posts(request):
     
 def user_profile(request, username):
 
-    user = User.objects.get(username=username)
+    user = get_object_or_404(User, username=username)
 
     return render(request, "network/user_profile.html", {
         "user": user,
@@ -96,7 +96,7 @@ def user_profile(request, username):
 @csrf_exempt
 def user_profile_api(request, username):
 
-    user = User.objects.get(username=username)
+    user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user).order_by("-timestamp")
 
     if request.method == "GET":
