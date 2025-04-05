@@ -288,3 +288,17 @@ button[type="submit"]:hover {
     color: var(--text-color);
     font-weight: 500;
 }
+
+.heart-icon {
+    cursor: pointer;
+    display: inline-block;
+}
+.heart-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #888;
+}
+
+.heart-icon.liked svg {
+    fill: #888; 
+}
