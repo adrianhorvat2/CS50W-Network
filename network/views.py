@@ -94,14 +94,31 @@ def posts(request):
     elif request.method == "POST":
         data = json.loads(request.body)
         content = data.get("content", "")
+        post_id = data.get("post_id", None)
         
-        if content == "":
+        if post_id:
+            post = get_object_or_404(Post, id=post_id)
+            
+            if request.user in post.likes.all():
+                post.likes.remove(request.user)
+                liked = False
+            else:
+                post.likes.add(request.user)
+                liked = True
+            
+            return JsonResponse({
+                "likes": post.likes.count(),
+                "liked": liked
+            }, status=200)
+        
+        elif content:
+            post = Post(user=request.user, content=content)
+            post.save()
+            
+            return JsonResponse({"message": "Post created successfully"}, status=201)
+        
+        else:
             return JsonResponse({"error": "Post cannot be empty"}, status=400)
-
-        post = Post(user=request.user, content=content)
-        post.save()
-        
-        return JsonResponse({"message": "Post created successfully"}, status=201)
     
     elif request.method == "PUT":
         data = json.loads(request.body)

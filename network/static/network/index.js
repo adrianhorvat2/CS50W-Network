@@ -93,6 +93,38 @@ function load_posts(url, page=1) {
     });
 }
 
+function toggleLike(post_id) {
+    const heartIcon = document.querySelector(`#post-${post_id} .heart-icon svg`);
+    const likesCounter = document.querySelector(`#post-${post_id} .post-likes p`);
+
+    fetch(`/posts`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            post_id: post_id
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.liked) {
+            heartIcon.classList.add('liked');
+            heartIcon.setAttribute('fill', 'red');
+        } else {
+            heartIcon.classList.remove('liked');
+            heartIcon.setAttribute('fill', 'none');
+        }
+
+        if (data.likes !== undefined) {
+            likesCounter.textContent = data.likes;
+        }
+    })
+    .catch(error => {
+        console.error('Error toggling like:', error);
+    });
+}
+
 function edit_post(post_id) {
     const postDiv = document.querySelector(`#post-${post_id}`);
     const contentDiv = postDiv.querySelector(".post-content");

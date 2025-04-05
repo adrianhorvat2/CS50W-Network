@@ -300,5 +300,5 @@ button[type="submit"]:hover {
 }
 
 .heart-icon.liked svg {
-    fill: #888; 
+    fill: red; 
 }
