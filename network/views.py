@@ -146,6 +146,7 @@ def user_profile(request, username):
 def user_profile_api(request, username):
 
     user = get_object_or_404(User, username=username)
+    logged_in_user = request.user.username 
 
     if request.method == "GET":
         page = request.GET.get('page', 1)
@@ -159,6 +160,7 @@ def user_profile_api(request, username):
         
         return JsonResponse({
             "username": user.username,
+            "logged_in_user": logged_in_user,
             "posts": [post.serialize() for post in page_obj],
             "followers": user.followers.count(),
             "following": user.following.count(),

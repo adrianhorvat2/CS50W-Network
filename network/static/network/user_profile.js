@@ -32,7 +32,7 @@ function load_posts(page=1){
         const posts = data.posts;
         
         posts.forEach(post => {
-            const isOwner = post.user === data.username;
+            const isOwner = post.user === data.logged_in_user;
             const post_div = document.createElement('div');
             post_div.classList.add('post');
 
