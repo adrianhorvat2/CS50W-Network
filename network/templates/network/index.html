@@ -1,0 +1,23 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block script %}
+<script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <h1>Posts</h1>
+        <div id="post-form-container">
+            <form id="post-form">
+                {% csrf_token %}
+                <textarea id="post-content" placeholder="What's on your mind?"></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+        <div id="posts-view">
+        </div>
+    {% else %}
+    <h1><a href="{% url 'register' %}">Create an account</a> or <a href="{% url 'login' %}">log in</a> to see posts</h1>
+    {% endif %}
+{% endblock %}

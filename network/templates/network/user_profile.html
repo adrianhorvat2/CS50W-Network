@@ -1,0 +1,29 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block script %}
+<script src="{% static 'network/user_profile.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<h1 id="profile-username"></h1>
+
+<div class="profile-info">
+    <div class="followers">
+        <div class="label">Followers</div>
+        <div id="followers-count"></div>
+    </div>
+    <div class="following">
+        <div class="label">Following</div>
+        <div id="following-count"></div>
+    </div>
+</div>
+
+{% if user != request.user %}
+    <div class = "follow-button-container">
+        <button id="follow-button"></button>
+    </div>
+{% endif %}
+
+<div id="posts-view"></div>
+{% endblock %}
