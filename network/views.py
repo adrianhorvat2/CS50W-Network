@@ -103,6 +103,20 @@ def posts(request):
         
         return JsonResponse({"message": "Post created successfully"}, status=201)
     
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
+        content = data.get("content", "")
+        
+        if content == "":
+            return JsonResponse({"error": "Post cannot be empty"}, status=400)
+
+        post = get_object_or_404(Post, id=post_id, user=request.user)
+        post.content = content
+        post.save()
+        
+        return JsonResponse({"message": "Post updated successfully"}, status=200)
+    
 def user_profile(request, username):
 
     user = get_object_or_404(User, username=username)

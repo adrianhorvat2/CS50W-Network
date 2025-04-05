@@ -62,12 +62,18 @@ function load_posts(url, page=1) {
             const post_div = document.createElement('div');
             post_div.classList.add('post');
 
+            post_div.setAttribute("id", `post-${post.id}`);
             post_div.innerHTML = `
-                <p>${post.content}</p>
+                <p class="post-content">${post.content}</p>
                 <div class="post-meta-container">
                     <div class="post-meta">By <strong><a href="${post.user}">${post.user}</a></strong> <small>${post.timestamp}</small></div>
                     <div class="post-likes">Likes: ${post.likes}</div>
-                    ${isOwner ? `<button type="button" onclick="edit_post('${post.id}')">Edit</button>` : ''}
+                    ${
+                        isOwner ? `
+                            <button type="button" class="edit-button" onclick="edit_post(${post.id})">Edit</button>
+                            <button type="button" class="save-button" style="display:none;" onclick="save_edit(${post.id})">Save</button>
+                        ` : ''
+                    }
                 </div>
             `;
             document.querySelector('#posts-view').appendChild(post_div);
@@ -79,6 +85,50 @@ function load_posts(url, page=1) {
     });
 }
 
+function edit_post(post_id) {
+    const postDiv = document.querySelector(`#post-${post_id}`);
+    const contentDiv = postDiv.querySelector(".post-content");
+    const originalContent = contentDiv.innerText;
+
+    contentDiv.innerHTML = `
+        <textarea id="edit-content-${post_id}" class="edit-textarea">${originalContent}</textarea>
+    `;
+
+    const editButton = postDiv.querySelector(".edit-button");
+    const saveButton = postDiv.querySelector(".save-button");
+
+    editButton.style.display = "none";  
+    saveButton.style.display = "inline";  
+}
+
+
+function save_edit(post_id) {
+
+    const newContent = document.querySelector(`#edit-content-${post_id}`).value;
+
+    fetch(`/posts`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            post_id: post_id,
+            content: newContent
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            const postDiv = document.querySelector(`#post-${post_id}`);
+            const contentDiv = postDiv.querySelector(".post-content");
+
+            contentDiv.innerText = newContent;
+            postDiv.querySelector(".edit-button").style.display = "inline";
+            postDiv.querySelector(".save-button").style.display = "none";
+        } else {
+            console.error('Error while updating post.');
+        }
+    });
+}
 
 function create_pagination_controls(url, current_page, total_pages) {
 
