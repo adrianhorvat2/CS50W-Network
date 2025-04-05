@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.utils import timezone
 
 class User(AbstractUser):
     followers = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="user_following")
@@ -26,7 +26,7 @@ class Post(models.Model):
             "id": self.id,
             "user": self.user.username,  
             "content": self.content,
-            "timestamp": self.timestamp.strftime("%H:%M %B %d, %Y"),
+            "timestamp": timezone.localtime(self.timestamp).strftime("%H:%M %B %d, %Y"),
             "likes": self.likes.count(),
         }
     
