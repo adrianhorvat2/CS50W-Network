@@ -73,6 +73,8 @@ def posts(request):
         page = request.GET.get('page', 1)
         posts_per_page = 10
         
+        user = request.user
+        
         all_posts = Post.objects.all().order_by("-timestamp")
         
         paginator = Paginator(all_posts, posts_per_page)
@@ -84,7 +86,8 @@ def posts(request):
             'has_next': page_obj.has_next(),
             'has_previous': page_obj.has_previous(),
             'current_page': page_obj.number,
-            'total_pages': paginator.num_pages
+            'total_pages': paginator.num_pages,
+            'user': user.username
         }, safe=False)
     
     
@@ -171,4 +174,5 @@ def following_api(request):
         'has_previous': page_obj.has_previous(),
         'current_page': page_obj.number,
         'total_pages': paginator.num_pages
-    }, safe=False) 
+    }, safe=False)
+ 

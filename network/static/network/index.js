@@ -57,13 +57,17 @@ function load_posts(url, page=1) {
         const posts = data.posts || data;
 
         posts.forEach(post => {
+
+            const isOwner = post.user === data.user;
             const post_div = document.createElement('div');
             post_div.classList.add('post');
+
             post_div.innerHTML = `
                 <p>${post.content}</p>
                 <div class="post-meta-container">
                     <div class="post-meta">By <strong><a href="${post.user}">${post.user}</a></strong> <small>${post.timestamp}</small></div>
                     <div class="post-likes">Likes: ${post.likes}</div>
+                    ${isOwner ? `<button type="button" onclick="edit_post('${post.id}')">Edit</button>` : ''}
                 </div>
             `;
             document.querySelector('#posts-view').appendChild(post_div);
@@ -74,6 +78,7 @@ function load_posts(url, page=1) {
         }
     });
 }
+
 
 function create_pagination_controls(url, current_page, total_pages) {
 
