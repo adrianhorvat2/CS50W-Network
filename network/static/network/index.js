@@ -67,13 +67,13 @@ function load_posts(url, page=1) {
                 <p class="post-content">${post.content}</p>
                 <div class="post-meta-container">
                     <div class="post-meta">By <strong><a href="${post.user}">${post.user}</a></strong> <small>${post.timestamp}</small></div>
-                    <div class="post-likes">Likes: ${post.likes}</div>
                     ${
                         isOwner ? `
                             <button type="button" class="edit-button" onclick="edit_post(${post.id})">Edit</button>
                             <button type="button" class="save-button" style="display:none;" onclick="save_edit(${post.id})">Save</button>
                         ` : ''
                     }
+                    <div class="post-likes">Likes: ${post.likes}</div>
                 </div>
             `;
             document.querySelector('#posts-view').appendChild(post_div);
