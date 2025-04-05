@@ -298,7 +298,3 @@ button[type="submit"]:hover {
     height: 24px;
     stroke: #888;
 }
-
-.heart-icon.liked svg {
-    fill: red; 
-}

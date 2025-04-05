@@ -80,9 +80,15 @@ def posts(request):
         paginator = Paginator(all_posts, posts_per_page)
 
         page_obj = paginator.get_page(page)
+
+        serialized_posts = []
+        for post in page_obj:
+            post_data = post.serialize()
+            post_data['liked'] = request.user in post.likes.all() if request.user.is_authenticated else False
+            serialized_posts.append(post_data)
         
         return JsonResponse({
-            'posts': [post.serialize() for post in page_obj],
+            'posts': serialized_posts,
             'has_next': page_obj.has_next(),
             'has_previous': page_obj.has_previous(),
             'current_page': page_obj.number,
@@ -157,11 +163,17 @@ def user_profile_api(request, username):
         paginator = Paginator(user_posts, posts_per_page)
         
         page_obj = paginator.get_page(page)
+
+        serialized_posts = []
+        for post in page_obj:
+            post_data = post.serialize()
+            post_data['liked'] = request.user in post.likes.all() if request.user.is_authenticated else False
+            serialized_posts.append(post_data)
         
         return JsonResponse({
             "username": user.username,
             "logged_in_user": logged_in_user,
-            "posts": [post.serialize() for post in page_obj],
+            "posts": serialized_posts,
             "followers": user.followers.count(),
             "following": user.following.count(),
             "is_following": request.user in user.followers.all() if request.user.is_authenticated else False,
@@ -200,9 +212,15 @@ def following_api(request):
     paginator = Paginator(all_posts, posts_per_page)
 
     page_obj = paginator.get_page(page)
+
+    serialized_posts = []
+    for post in page_obj:
+        post_data = post.serialize()
+        post_data['liked'] = request.user in post.likes.all() if request.user.is_authenticated else False
+        serialized_posts.append(post_data)
     
     return JsonResponse({
-        'posts': [post.serialize() for post in page_obj],
+        'posts': serialized_posts,
         'has_next': page_obj.has_next(),
         'has_previous': page_obj.has_previous(),
         'current_page': page_obj.number,

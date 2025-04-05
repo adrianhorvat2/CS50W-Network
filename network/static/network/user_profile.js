@@ -50,7 +50,7 @@ function load_posts(page=1){
                     <div class="post-likes" style="display: flex; align-items: center;">
                         <span class="heart-icon" onclick="toggleLike(${post.id})">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-                                <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                     d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                             </svg>
                         </span>
@@ -58,6 +58,13 @@ function load_posts(page=1){
                     </div>
                 </div>
             `;
+
+            const heartIcon = post_div.querySelector('.heart-icon svg');
+            if (post.liked) { 
+                heartIcon.setAttribute('fill', '#888');
+            } else {
+                heartIcon.setAttribute('fill', 'none');
+            }
 
             document.querySelector('#posts-view').appendChild(post_div);
 
@@ -83,7 +90,7 @@ function toggleLike(post_id) {
     .then(data => {
         if (data.liked) {
             heartIcon.classList.add('liked');
-            heartIcon.setAttribute('fill', 'red');
+            heartIcon.setAttribute('fill', '#888');
         } else {
             heartIcon.classList.remove('liked');
             heartIcon.setAttribute('fill', 'none');
