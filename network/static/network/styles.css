@@ -201,6 +201,15 @@ button[type="submit"]:hover {
     text-align: right;
 }
 
+.char-counter {
+    width: 100%;
+    text-align: right;
+    color: var(--text-color);
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .post p {
     margin: 10px 0; 
     word-wrap: break-word;

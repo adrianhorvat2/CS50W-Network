@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", function() {
     if (postForm) {
         postForm.addEventListener('submit', submit_post);
     }
+
+    const postContent = document.querySelector('#post-content');
+    const charCount = document.querySelector('#char-count');
+    
+    postContent.addEventListener('input', function() {
+        const remaining = 512 - this.value.length;
+        charCount.textContent = remaining;
+    });
     
     const allPostsLink = document.querySelector('#all-posts');
     if (allPostsLink) {
@@ -32,14 +40,44 @@ function submit_post(event) {
             'Content-Type': 'application/json',
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Post empty');
+        }
+        return response.json();
+    })
     .then(result => {
-        document.querySelector('#post-content').value = '';
-        const currentPath = window.location.pathname;
-        if (currentPath === '/following') {
-            load_posts('/following_api');
+        if (result.message === "Post created successfully") {
+            document.querySelector('#post-content').value = '';
+            document.querySelector('#char-count').textContent = '512';
+            fetch('/posts?page=1')
+            .then(response => response.json())
+            .then(data => {
+                if (data.posts && data.posts.length > 0) {
+                    const latestPost = data.posts[0];
+                    const isOwner = latestPost.user === data.user;
+                    const postElement = createPostElement(latestPost, isOwner, data.user);
+                    
+                    const postsView = document.querySelector('#posts-view');
+                    if (postsView.firstChild) {
+                        postsView.insertBefore(postElement, postsView.firstChild);
+                    } else {
+                        postsView.appendChild(postElement);
+                    }
+                }
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const errorDiv = document.querySelector('.message');
+        if (errorDiv) {
+            errorDiv.textContent = error.message;
         } else {
-            load_posts('/posts');
+            const newErrorDiv = document.createElement('div');
+            newErrorDiv.className = 'message';
+            newErrorDiv.textContent = error.message;
+            document.querySelector('#post-form').insertBefore(newErrorDiv, document.querySelector('#post-form button'));
         }
     });
 }
