@@ -13,7 +13,10 @@
             <form id="post-form">
                 {% csrf_token %}
                 <textarea id="post-content" placeholder="What's on your mind?" maxlength="512"></textarea>
-                <div class="char-counter"><div id="char-count">512</div></div>
+                <div class="char-counter">
+                    <div id="error-message" class="error-message"></div>
+                    <div id="char-count">512</div>
+                </div>
                 <button type="submit">Post</button>
             </form>
         </div>

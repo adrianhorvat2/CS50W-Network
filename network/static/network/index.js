@@ -3,16 +3,21 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const postForm = document.querySelector('#post-form');
     if (postForm) {
+        const postContent = document.querySelector('#post-content');
+        const charCount = document.querySelector('#char-count');
+        const errorMessage = document.querySelector('#error-message');
+        
+        postContent.addEventListener('input', function() {
+            const remaining = 512 - this.value.length;
+            charCount.textContent = remaining;
+
+            if (this.value.trim()) {
+                    errorMessage.textContent = '';
+                    errorMessage.classList.remove('show');
+            }
+        });
         postForm.addEventListener('submit', submit_post);
     }
-
-    const postContent = document.querySelector('#post-content');
-    const charCount = document.querySelector('#char-count');
-    
-    postContent.addEventListener('input', function() {
-        const remaining = 512 - this.value.length;
-        charCount.textContent = remaining;
-    });
     
     const allPostsLink = document.querySelector('#all-posts');
     if (allPostsLink) {
@@ -29,7 +34,17 @@ document.addEventListener("DOMContentLoaded", function() {
 function submit_post(event) {
     event.preventDefault();
     
-    const content = document.querySelector('#post-content').value;
+    const content = document.querySelector('#post-content').value.trim();
+    const errorMessage = document.querySelector('#error-message');
+    
+    if (!content) {
+        errorMessage.textContent = "Post cannot be empty";
+        errorMessage.classList.add('show');
+        return;
+    }
+    
+    errorMessage.textContent = '';
+    errorMessage.classList.remove('show');
     
     fetch('/posts', {
         method: 'POST',
@@ -42,7 +57,9 @@ function submit_post(event) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Post empty');
+            return response.json().then(data => {
+                throw new Error(data.error);
+            });
         }
         return response.json();
     })
@@ -70,15 +87,8 @@ function submit_post(event) {
     })
     .catch(error => {
         console.error('Error:', error);
-        const errorDiv = document.querySelector('.message');
-        if (errorDiv) {
-            errorDiv.textContent = error.message;
-        } else {
-            const newErrorDiv = document.createElement('div');
-            newErrorDiv.className = 'message';
-            newErrorDiv.textContent = error.message;
-            document.querySelector('#post-form').insertBefore(newErrorDiv, document.querySelector('#post-form button'));
-        }
+        errorMessage.textContent = error.message;
+        errorMessage.classList.add('show');
     });
 }
 

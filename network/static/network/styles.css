@@ -203,11 +203,29 @@ button[type="submit"]:hover {
 
 .char-counter {
     width: 100%;
-    text-align: right;
     color: var(--text-color);
     font-size: 14px;
     margin-top: 5px;
     margin-bottom: 5px;
+    position: relative;
+    min-height: 20px;
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+#char-count {
+    position: absolute;
+    right: 0;
 }
 
 .post p {
