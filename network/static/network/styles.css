@@ -54,10 +54,6 @@ h1 a:hover {
     color: #ffffff !important; 
 }
 
-.navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
 /*LOGIN AND REGISTER FORMS*/
 .form-control {
     padding: 10px;
@@ -123,83 +119,6 @@ h1 a:hover {
     color: var(--text-color); 
 }
 
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: var(--primary-bg); 
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #2e3136;
-    color: #ffffff;
-}
-
-.edit-button, .save-button {
-    margin-left: 250px;
-    width: 10%;
-    padding: 5px;
-    background-color: var(--primary-bg); 
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.edit-button:hover, .save-button:hover {
-    background-color: #2e3136;
-    color: #ffffff;
-}
-
-.post {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 15px; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    background-color: var(--container-bg); 
-}
-
-.post-meta-container {
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px; 
-}
-
-.post-meta {
-    font-size: 16px; 
-    color: #888;
-    display: inline-block; 
-    margin-right: auto; 
-}
-
-.post-meta a {
-    color: var(--text-color); 
-    text-decoration: none;
-}
-
-.post-meta a:hover {
-    color: #ffffff; 
-    text-decoration: none;
-}
-
-.post-likes {
-    display: inline-block; 
-    margin-left: auto; 
-    text-align: right;
-}
 
 .char-counter {
     width: 100%;
@@ -226,6 +145,87 @@ button[type="submit"]:hover {
 #char-count {
     position: absolute;
     right: 0;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: var(--primary-bg); 
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #2e3136;
+    color: #ffffff;
+}
+
+.edit-button, .save-button {
+    margin-left: auto;
+    min-width: 80px;
+    padding: 5px 10px;
+    background-color: var(--primary-bg); 
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.edit-button:hover, .save-button:hover {
+    background-color: #2e3136;
+    color: #ffffff;
+}
+
+.post {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    background-color: var(--container-bg);
+    position: relative;
+}
+
+.post-meta-container {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.post-meta {
+    font-size: 16px; 
+    color: #888;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.post-meta a {
+    color: var(--text-color); 
+    text-decoration: none;
+}
+
+.post-meta a:hover {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
+.post-likes {
+    display: inline-block;
+    text-align: right;
 }
 
 .post p {
@@ -276,6 +276,7 @@ button[type="submit"]:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    min-width: 100px;
 }
 
 #follow-button:hover {
@@ -324,4 +325,122 @@ button[type="submit"]:hover {
     width: 24px;
     height: 24px;
     stroke: #888;
+}
+
+.heart-icon:hover svg {
+    transform: scale(1.1);
+}
+
+.delete-icon {
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: #2b2d2f;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+
+    .nav-item {
+        margin: 0.5rem 0;
+    }
+
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.5em;
+        height: 1.5em;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+    
+}
+
+@media (max-width: 576px) {
+    .edit-button, .save-button {
+        font-size: 12px;
+        padding: 4px 8px;
+        min-width: 60px;
+    }
+
+    .post-meta {
+        font-size: 14px;
+    }
+
+    .post-meta-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-likes {
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 1168px) {
+    .post-meta-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    .post-meta {
+        margin-bottom: 10px;
+    }
+
+    .post-likes {
+        margin-top: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .edit-button, .save-button {
+        margin-left: 0;
+    }
+}
+
+.edit-controls {
+    width: 100%;
+    color: var(--text-color);
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    min-height: 20px;
+}
+
+.edit-controls .char-count {
+    position: absolute;
+    right: 0;
+}
+
+.edit-controls .error-message {
+    color: #ff4444;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    display: none;
+}
+
+.edit-controls .error-message.show {
+    display: block;
 }

@@ -84,6 +84,11 @@ function createPostElement(post, isOwner) {
                 isOwner ? `
                     <button type="button" class="edit-button" onclick="edit_post(${post.id})">Edit</button>
                     <button type="button" class="save-button" style="display:none;" onclick="save_edit(${post.id})">Save</button>
+                    <span class="delete-icon" onclick="delete_post(${post.id})" style="cursor: pointer; color: #dc3545;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                            </svg>
+                        </span>
                 ` : ''
             }
                 <span class="heart-icon" onclick="toggleLike(${post.id})">
@@ -139,4 +144,29 @@ function create_pagination_controls(currentPage, totalPages, loadFunction) {
     }
     
     document.querySelector('#posts-view').appendChild(pagination_div);
+}
+
+function delete_post(post_id) {
+    if (confirm('Are you sure you want to delete this post?')) {
+        fetch(`/posts`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                post_id: post_id
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                const postElement = document.querySelector(`#post-${post_id}`);
+                if (postElement) {
+                    postElement.remove();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 }

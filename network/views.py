@@ -140,6 +140,15 @@ def posts(request):
         
         return JsonResponse({"message": "Post updated successfully"}, status=200)
     
+    elif request.method == "DELETE":
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
+        
+        post = get_object_or_404(Post, id=post_id, user=request.user)
+        post.delete()
+        
+        return JsonResponse({"message": "Post deleted successfully"}, status=200)
+    
 def user_profile(request, username):
 
     user = get_object_or_404(User, username=username)
