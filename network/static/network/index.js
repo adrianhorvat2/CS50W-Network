@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentPath = window.location.pathname;
     
     if (currentPath === '/following') {
-        load_posts('/following_api');
+        load_posts('/api/following/posts');
     } else if (currentPath === '/') {
-        load_posts('/posts');
+        load_posts('/api/posts');
     }
 
     const postForm = document.querySelector('#post-form');
@@ -41,7 +41,7 @@ function submit_post(event) {
     errorMessage.textContent = '';
     errorMessage.classList.remove('show');
     
-    fetch('/posts', {
+    fetch('/api/posts', {
         method: 'POST',
         body: JSON.stringify({
             content: content
@@ -62,7 +62,7 @@ function submit_post(event) {
         if (result.message === "Post created successfully") {
             document.querySelector('#post-content').value = '';
             document.querySelector('#char-count').textContent = '512';
-            fetch('/posts?page=1')
+            fetch('/api/posts?page=1')
             .then(response => response.json())
             .then(data => {
                 if (data.posts && data.posts.length > 0) {

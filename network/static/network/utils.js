@@ -2,7 +2,7 @@ function toggleLike(post_id) {
     const heartIcon = document.querySelector(`#post-${post_id} .heart-icon svg`);
     const likesCounter = document.querySelector(`#post-${post_id} .post-likes p`);
 
-    fetch(`/posts`, {
+    fetch(`/api/posts`, {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function save_edit(post_id) {
     errorMessage.textContent = '';
     errorMessage.classList.remove('show');
 
-    fetch(`/posts`, {
+    fetch(`/api/posts`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ function create_pagination_controls(currentPage, totalPages, loadFunction) {
 
 function delete_post(post_id) {
     if (confirm('Are you sure you want to delete this post?')) {
-        fetch(`/posts`, {
+        fetch(`/api/posts`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

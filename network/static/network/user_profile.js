@@ -82,7 +82,7 @@ function setup_tooltips() {
 }
 
 function load_followers_tooltip(username) {
-    fetch(`/api/followers/${username}`)
+    fetch(`/api/profile/${username}/followers`)
     .then(response => response.json())
     .then(data => {
         const list = document.getElementById('followers-list');
@@ -102,7 +102,7 @@ function load_followers_tooltip(username) {
 }
 
 function load_following_tooltip(username) {
-    fetch(`/api/following/${username}`)
+    fetch(`/api/profile/${username}/following`)
     .then(response => response.json())
     .then(data => {
         const list = document.getElementById('following-list');

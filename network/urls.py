@@ -5,14 +5,15 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("login", views.login_view, name="login"),
-    path("logout", views.logout_view, name="logout"),
-    path("register", views.register, name="register"),
-    path("posts", views.posts, name="posts"),
-    path("following", views.following, name="following"),
-    path("following_api", views.following_api, name="following_api"),
-    path("<str:username>", views.user_profile, name="user_profile"),
-    path("api/profile/<str:username>", views.user_profile_api, name="user_profile_api"),
-    path("api/followers/<str:username>", views.get_followers_list, name="get_followers_list"),
-    path("api/following/<str:username>", views.get_following_list, name="get_following_list"),
+    path("login", views.login_view, name="login"),         
+    path("logout", views.logout_view, name="logout"),      
+    path("register", views.register, name="register"),      
+    path("following", views.following, name="following"),   
+    path("<str:username>", views.user_profile, name="user_profile"),  
+    
+    path("api/posts", views.posts, name="posts_api"),                           
+    path("api/following/posts", views.following_api, name="following_posts_api"),  
+    path("api/profile/<str:username>", views.user_profile_api, name="user_profile_api"),  
+    path("api/profile/<str:username>/followers", views.get_followers_list, name="followers_list_api"),  
+    path("api/profile/<str:username>/following", views.get_following_list, name="following_list_api"),  
 ]
