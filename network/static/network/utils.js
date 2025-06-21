@@ -34,17 +34,50 @@ function edit_post(post_id) {
 
     contentDiv.innerHTML = `
         <textarea id="edit-content-${post_id}" class="edit-textarea">${originalContent}</textarea>
+        <div class="edit-controls">
+            <div id="edit-char-count-${post_id}" class="char-count">${512 - originalContent.length}</div>
+            <div id="edit-error-message-${post_id}" class="error-message"></div>
+        </div>
     `;
 
     const editButton = postDiv.querySelector(".edit-button");
     const saveButton = postDiv.querySelector(".save-button");
+    const textarea = document.querySelector(`#edit-content-${post_id}`);
+    const charCount = document.querySelector(`#edit-char-count-${post_id}`);
+    const errorMessage = document.querySelector(`#edit-error-message-${post_id}`);
+
+    textarea.addEventListener('input', function() {
+        const remaining = 512 - this.value.length;
+        charCount.textContent = remaining;
+        
+        if (this.value.trim()) {
+            errorMessage.textContent = '';
+            errorMessage.classList.remove('show');
+        }
+    });
 
     editButton.style.display = "none";  
     saveButton.style.display = "inline";  
 }
 
 function save_edit(post_id) {
-    const newContent = document.querySelector(`#edit-content-${post_id}`).value;
+    const newContent = document.querySelector(`#edit-content-${post_id}`).value.trim();
+    const errorMessage = document.querySelector(`#edit-error-message-${post_id}`);
+    
+    if (!newContent) {
+        errorMessage.textContent = "Post cannot be empty";
+        errorMessage.classList.add('show');
+        return;
+    }
+    
+    if (newContent.length > 512) {
+        errorMessage.textContent = "Post cannot exceed 512 characters";
+        errorMessage.classList.add('show');
+        return;
+    }
+    
+    errorMessage.textContent = '';
+    errorMessage.classList.remove('show');
 
     fetch(`/posts`, {
         method: 'PUT',
