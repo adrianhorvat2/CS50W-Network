@@ -236,3 +236,20 @@ def following_api(request):
         'total_pages': paginator.num_pages
     }, safe=False)
  
+def get_followers_list(request, username):
+    user = get_object_or_404(User, username=username)
+    followers = user.followers.all()
+    followers_list = [follower.username for follower in followers]
+    
+    return JsonResponse({
+        "followers": followers_list
+    })
+
+def get_following_list(request, username):
+    user = get_object_or_404(User, username=username)
+    following = user.following.all()
+    following_list = [followed.username for followed in following]
+    
+    return JsonResponse({
+        "following": following_list
+    })

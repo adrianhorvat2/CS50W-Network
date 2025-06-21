@@ -444,3 +444,52 @@ button[type="submit"]:hover {
 .edit-controls .error-message.show {
     display: block;
 }
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip.show {
+    visibility: visible;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #000000 transparent transparent transparent;
+}
+
+.tooltip-list {
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.tooltip-list div {
+    padding: 2px 0;
+    border-bottom: 1px solid #333;
+}
+
+.tooltip-list div:last-child {
+    border-bottom: none;
+}

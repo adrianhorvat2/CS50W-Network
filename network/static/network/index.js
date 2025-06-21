@@ -1,34 +1,29 @@
 document.addEventListener("DOMContentLoaded", function() {
     const currentPath = window.location.pathname;
     
-    const postForm = document.querySelector('#post-form');
-    if (postForm) {
-        const postContent = document.querySelector('#post-content');
-        const charCount = document.querySelector('#char-count');
-        const errorMessage = document.querySelector('#error-message');
-        
-        postContent.addEventListener('input', function() {
-            const remaining = 512 - this.value.length;
-            charCount.textContent = remaining;
-
-            if (this.value.trim()) {
-                    errorMessage.textContent = '';
-                    errorMessage.classList.remove('show');
-            }
-        });
-        postForm.addEventListener('submit', submit_post);
-    }
-    
-    const allPostsLink = document.querySelector('#all-posts');
-    if (allPostsLink) {
-        allPostsLink.addEventListener('click', () => {load_posts('/posts')});
-    }
-    
     if (currentPath === '/following') {
         load_posts('/following_api');
-    } else if (currentPath === '/' || currentPath === '/posts') {
+    } else if (currentPath === '/') {
         load_posts('/posts');
     }
+
+    const postForm = document.querySelector('#post-form');
+
+    const postContent = document.querySelector('#post-content');
+    const charCount = document.querySelector('#char-count');
+    const errorMessage = document.querySelector('#error-message');
+    
+    postContent.addEventListener('input', function() {
+        const remaining = 512 - this.value.length;
+        charCount.textContent = remaining;
+
+        if (this.value.trim()) {
+                errorMessage.textContent = '';
+                errorMessage.classList.remove('show');
+        }
+    });
+    postForm.addEventListener('submit', submit_post);
+    
 });
 
 function submit_post(event) {
